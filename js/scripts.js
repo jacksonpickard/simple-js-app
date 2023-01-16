@@ -1,3 +1,4 @@
+
 let pokemonList = [
     {name: 'Charizard', height: 1.7, type: ['fire' , 'flying']},
     {name: 'Oddish', height: 0.5, type: ['grass' , 'poison']},
@@ -5,8 +6,8 @@ let pokemonList = [
 ];
 
 for (let i = 0; i<pokemonList.length; i++){
-    document.write(pokemonList[i].name + " (height: " + pokemonList[i].height + ")" );
+    document.write("<p>" + pokemonList[i].name + " (height: " + pokemonList[i].height + ")");
 if (pokemonList[i].height >= 1.5){
-    document.write("Wow, that's big!!")
+    document.write(" Wow, that's big!!") + "</p>"
     }
 }
