@@ -1,8 +1,7 @@
-body {
-    color: rgb(84, 79, 243);
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-}
 
 .button-class {
-    color: dimgrey;
+    color: rgb(0, 0, 0);
+    padding: 8px 16px;
+    margin: 4px 2px;
+    display: inline-block;
 }
