@@ -2,7 +2,7 @@
 let pokemonRepository = (function () {
 
     let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=120';
 
 function add(pokemon) {
     if (
@@ -26,7 +26,7 @@ function addListItem (pokemon) {
    button.innerText = pokemon.name;
    button.classList.add("button-class");
    listPokemon.appendChild(button);
-   pokemonRepository.appendChild(listPokemon);
+   pokemonList.appendChild(listPokemon);
    button.addEventListener("click", 
 function(Event) {
     showDetails(pokemon);
