@@ -91,7 +91,7 @@ return {
     };
 })();
 
-// function that goes through the list of pokemon and displays them
+// function that goes through the list of pokemon and displays them on index
 pokemonRepository.loadList().then(function() {
     pokemonRepository.getAll().forEach(function(pokemon){
         pokemonRepository.addListItem(pokemon);
