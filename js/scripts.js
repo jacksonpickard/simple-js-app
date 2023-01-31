@@ -96,7 +96,22 @@ function showDetails (item) {
             titleElement.innerText =  (item.name);
 
             let contentElement = document.createElement ('p');
-            contentElement.innerText =('Height: ' + item.height + '\n' +  '\n' + 'Types: ' + item.types);
+
+            // variable declared as empty string to be used to store the names of the types
+            let pokemonTypes = "";
+
+            // for loop used to iterate through the item.types object.
+            for (let i = 0; i < item.types.length; i++) {
+                //name of the current type is concatenated to the typeNames variable (appending to the end of the string)
+                pokemonTypes += item.types[i].type.name;
+                //if i is less than length - 1, a comma and space are added to typeNames (to avoid adding comma after las type)
+                if (i < item.types.length - 1) {
+                    pokemonTypes += ", ";
+                }
+            }
+
+            // value of typeNames is then assigned to the innertext property of contentElement.
+            contentElement.innerText =('Height: ' + item.height + '\n' +  '\n' + 'Types: ' + pokemonTypes);
 
 
             modal.appendChild (closeButtonElement);
