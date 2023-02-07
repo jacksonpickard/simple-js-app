@@ -1,39 +1,64 @@
 
 let pokemonRepository = (function () {
+  // empty array to load from api
+  let pokemonList = [];
+  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=120";
 
-    // empty array to load from api
-    let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=20';
+  let searchButton = $(".btn-secondary");
+  searchButton.on("click", function () {
+    let pokemonList = $(".pokemon-list");
+    pokemonList.empty();
+    getByName($(".form-control").val()).forEach(function (pokemon) {
+      addListItem(pokemon);
+    });
+  });
 
-//adds pokemon with .push, if object
-function add(pokemon) {
-    if (
-    typeof pokemon === "object" &&
-   "name" in pokemon 
-) {
-    pokemonList.push(pokemon);
-} else {
-    console.log("pokemon is not correct");
-}
-}
+  let searchBar = $(".form-control");
+  searchBar.on("keypress", function () {
+    let pokemonList = $(".pokemon-list");
+    pokemonList.empty();
+    getByName($(".form-control").val()).forEach(function (pokemon) {
+      addListItem(pokemon);
+    });
+  });
 
 function getAll() {
     return pokemonList;
 }
 
-function addListItem (pokemon) {
-    let pokemonList = document.querySelector(".pokemon-list");
-    let listPokemon = document.createElement('li');
-    let button = document.createElement('button');
-    button.innerText = pokemon.name;
-    button.classList.add("button-class");
-    listPokemon.appendChild(button);
-    pokemonList.appendChild(listPokemon);
-    // listens for a button click and the logs to the console the details (why do I need to put this under addListItem)
-    button.addEventListener("click", function(Event) {
-    showDetails(pokemon);
-   });
-}
+  //adds pokemon with .push, if object
+  function add(pokemon) {
+    if ((typeof pokemon === "object") & ("name" in pokemon)) {
+      pokemonList.push(pokemon);
+    }
+  }
+
+  function getByName(search) {
+    return pokemonList.filter(function (pokemon) {
+      return pokemon.name.toLowerCase().includes(search.toLowerCase());
+    });
+  }
+
+  function addListItem(pokemon) {
+    let pokemonList = $(".pokemon-list");
+    let listPokemon = $(`<li class="list-group-item"></li>`);
+    let button = $(
+      `<button type = "button" class = "pokemon-button btn btn-primary" data-toggle = "modal" data-target = "#pokeModal">${pokemon.name}</button>`
+    );
+
+    listPokemon.append(button);
+    pokemonList.append(listPokemon);
+
+    button.on("click", function () {
+      showDetails(pokemon);
+    });
+  }
+
+  function showDetails(pokemon) {
+    loadDetails(pokemon).then(function () {
+      showModal(pokemon);
+    });
+  }
 
 //load a list of pokemon from api. Promise fetch function. 
 function loadList() {
@@ -64,13 +89,15 @@ function loadDetails(item) {
       return response.json();
     }).then(function (details) {
         // details coming from api (all the info on each pokemon) after selecting which detail is needed (sprites, height, types-array)
-      item.imageUrl = details.sprites.front_default;
-      item.height = details.height;
-      item.types = details.types;
-      // any errors will be cought here
-    }).catch(function (e) {
-      console.error(e);
-    });
+        item.imageUrl = details.sprites.front_default;
+        item.height = details.height;
+        item.types = details.types;
+        item.weight = details.weight;
+        // any errors will be cought here
+      })
+      .catch(function (e) {
+        console.error(e);
+      });
   }
 
   // info to log when pokemon is clicked. Execute loadDetails and pass pokemon as parameter and then executes 
@@ -123,10 +150,15 @@ function showDetails (item) {
 
             modalContainer.classList.add('is-visible');
 
-    
-        function hideModal (){
-            modalContainer.classList.remove ('is-visible');
-        }
+    modalTitle.empty();
+    modalBody.empty();
+
+    modalTitle.append(pokemon.name);
+    modalBody.append(`<img class = "modal-img" src = ${pokemon.imageUrl}>`);
+    modalBody.append(`<p>Height: ${pokemon.height}</p>`);
+    modalBody.append(`<p>Type(s): ${types}</p>`);
+    modalBody.append(`<p>Weight: ${pokemon.weight} pounds </p>`);
+  }
 
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')){
