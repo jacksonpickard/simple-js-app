@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 let pokemonRepository = (function () {
   // empty array to load from api
   let pokemonList = [];
@@ -146,3 +147,10 @@ let pokemonRepository = (function () {
 
 
 pokemonRepository.loadAll();
+=======
+let pokemonList = [
+    {name: 'Charizard', height: 1.7, type: ['fire' , 'flying']},
+    {name: 'Oddish', height: 0.5, type: ['grass' , 'poison']},
+    {name: 'Mr. Mime', height: 1.3, type: ['psychic' , 'fairy']},
+];321 
+>>>>>>> Stashed changes
